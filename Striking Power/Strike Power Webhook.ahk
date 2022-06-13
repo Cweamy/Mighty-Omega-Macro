@@ -89,7 +89,7 @@ removetooltip() {
     tooltip
 }
 $end::reload ; for stop macro
-$f1:: ; change hotkey here https://www.autohotkey.com/docs/KeyList.htm key list
+$p:: ; change hotkey here https://www.autohotkey.com/docs/KeyList.htm key list
 toggle := !toggle
 if (toggle)
 { ;remember to make less loop possible for best performence and always put timer in loop if stuck in loop
