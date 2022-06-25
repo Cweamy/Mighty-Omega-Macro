@@ -3,7 +3,7 @@
 #MaxThreadsPerHotkey, 2
 SetBatchLines, -1
 CoordMode, Pixel, Screen
-CoordMode, Mouse, Screen
+CoordMode, Mouse, Window
 ;url:="bruh" ; use the url from Discord webhook bot
 ;userid:="<@12345678910>" ;example
 ; True, False
@@ -50,6 +50,7 @@ Winactive("Roblox")
 MsgBox, 262144,vivace Auto Dura,Select account for right side
 IfMsgBox, Ok
 {
+    WinGet, 2, PID, A
     Resize2("Roblox")
 }
 
@@ -64,809 +65,336 @@ IfMsgBox, No
  ;ImageSearch, x, y, 15, 100, 115, 160, *10 %A_ScriptDir%\bin\fullhp.png
 
 $F1::
-toggle := !toggle
-if (toggle)
-{
-	CoordMode, Pixel, Window
-	MouseMove, 0 , 0
-	Loop, 3
-	{
-		Send {MButton} ;active windows 2
-	}
-	ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
-	If ErrorLevel = 0
-	{
-		CoordMode, Mouse, Window
-		Loop, 30
-		{
-			Click, 100, 470
-		}
-		CoordMode, Mouse, Screen
-		Send 1
-		if autorhythm = True
-		{
-			if rhyleft = true
-			{
-				Send r
-			}
-		}
-	}
-	MouseMove, 850 , 0
-	Loop, 3
-	{
-		Send {MButton} ;active windows 2
-	}
-	ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
-	If ErrorLevel = 0
-	{
-		CoordMode, Mouse, Window
-		Loop, 30
-		{
-			Click, 100, 470
-		}
-		CoordMode, Mouse, Screen
-		Send 1
-		if autorhythm = True
-		{
-			If rhyright = true
-			{
-				Send r
-			}
-		}
+; get stuff ready
+CoordMode, Mouse, Screen
+;; get pid
+MouseMove, 100, 470
+Send {MButton}
+Sleep 200
+WinGet, 1, PID, A
+Sleep 100
+MouseMove, 900, 470
+Send {MButton}
+Sleep 200
+WinGet, 2, PID, A
+CoordMode, Mouse, Window
 
-	}
-	CoordMode, Pixel, Screen
-	Loop,
-	{
-		if Oneside = true
-		{
-			ImageSearch, x, y, 10, 100, 260, 120, *10 %A_ScriptDir%\bin\fullhp.png ; Left windows
-			If ErrorLevel = 0
-			{
-				MouseMove, 0 , 0
-				Loop, 3
-				{
-					Send {MButton} ;active windows 2
-				}
-				CoordMode, Pixel, Window
-				detect = 0
-				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-				if ErrorLevel = 1
-				{
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
-					If ErrorLevel = 0
-					{
-						Send 1
-					}
-					CoordMode, Mouse, Window
-					Loop, 50
-					{
-						Click, 100, 470
-						Sleep 10
-						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-						If ErrorLevel = 0
-						{
-							CoordMode, Mouse, Screen
-							CoordMode, Pixel, Screen
-							Break
-						}
-						else
-						{
-							detect++
-						}
-						if detect = 50
-						{
-							MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
-							ExitApp
-						}
-					}
-			
-				}
-				else
-				{
-					If Flow = True
-					{
-						CoordMode, Pixel, Window
-						PixelSearch, x, y, 409, 151, 411, 153, 0x242424,, Fast ;auto flow
-						If ErrorLevel = 0
-						{
-							Send e
-						}
-						CoordMode, Pixel, Screen
-					}
-					Send 2{Click, 100, 470}
-					duratimer := A_TickCount
-					MouseMove, 850 , 0
-					Loop, 3
-					{
-						Send {MButton} ;active windows 2
-					}
-					CoordMode, Mouse, Window
-					MouseMove, 100, 500
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
-					If ErrorLevel = 0
-					{
-						Send 1
-						if autorhythm = True
-						{
-							If rhyright = true
-							{
-								Send r
-							}
-						}
-					}
-					CoordMode, Pixel, Screen
-					Loop, ;fast phase
-					{
-						aa := A_TickCount - duratimer
-						if (aa > 26000)
-						{
-							Break
-						}
-						PixelSearch, x, y, 130, 105, 131, 106, 0x444444, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						PixelSearch, x, y, 130, 105, 131, 106, 0x3D3DA2, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						Click
-						Sleep 150
-					}
-					Loop, ; under half slow phase
-					{
-						aa := A_TickCount - duratimer
-						if (aa > 26000)
-						{
-							Break
-						}
-						PixelSearch, x, y, 70, 105, 71, 106, 0x444444, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						PixelSearch, x, y, 70, 105, 71, 106, 0x3D3DA2, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						Click
-						Sleep 300
-					}
-					Loop, ;30% phase
-					{
-						aa := A_TickCount - duratimer
-						if (aa > 26000)
-						{
-							Break
-						}
-						PixelSearch, x, y, 28, 105, 30, 106, 0x444444, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						PixelSearch, x, y, 28, 105, 30, 106, 0x3D3DA2, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						Click
-						Sleep 450
-					}
-					CoordMode, Mouse, Screen
-					MouseMove, 0 , 0
-					CoordMode, Mouse, Window
-					Loop, 3
-					{
-						Send {MButton} ;active windows 2
-					}
-					Click, 100, 470 ;active windows 1
-					CoordMode, Mouse, Screen
-					CoordMode, Pixel, Window
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-					if ErrorLevel = 1
-					{
-						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
-						If ErrorLevel = 0
-						{
-							Send 1
-						}
-						CoordMode, Mouse, Window
-						detect = 0
-						Loop, 50
-						{
-							Click, 100, 470
-							Sleep 10
-							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-							If ErrorLevel = 0
-							{
-								ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
-								If ErrorLevel = 0
-								{
-									CoordMode, Mouse, Screen
-									CoordMode, Pixel, Screen
-									Send 1
-									if autorhythm = True
-									{
-										if rhyleft = true
-										{
-											Send r
-										}
-									}
-								}
-								Break
-							}
-							else
-							{
-								detect++
-							}
-							if detect = 50
-							{
-								MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
-								ExitApp
-							}
-						}
-					}
-				
-				}
-			}
-			PixelSearch , x, y, 84, 133, 85, 134, 0x3A3A3A, 40, Fast
-			If ErrorLevel = 0
-			{
-				MouseMove, 0 , 0
-				Loop, 3
-				{
-					Send {MButton} ;active windows 2
-				}
-				CoordMode, Mouse, Window
-				MouseMove, 100, 500
-				Send {BackSpace}34567890 ;active windows 1
-				Sleep 200
-				time := A_TickCount
-				aw = 0
-				CoordMode, Pixel, Window
-				Loop, ; Eating part
-				{
-					Click, 100, 470, 10
-					Sleep 100
-					PixelSearch, x, y, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
-					If ErrorLevel = 1
-					{
-						Break
-					}
-					ImageSearch, x, y, 60, 515, 760, 600, *20 %A_ScriptDir%\bin\equipx.png ;if not found equiped slot /and still not full hunger
-					If ErrorLevel = 1
-					{
-						Sendinput, 34567890
-						aw++
-					}
-					if aw = 3
-					{
-						Break
-					}
-					
-				} Until A_TickCount - time > 60000
-				Send {BackSpace}
-				Sleep 100
-				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
-				If ErrorLevel = 0
-				{
-					CoordMode, Mouse, Screen
-					CoordMode, Pixel, Screen
-					Send 1
-					if autorhythm = True
-					{
-						if rhyleft = true
-						{
-							Send r
-						}
-					}
-				}
-			}
-		}
-		else
-		{
-			ImageSearch, x, y, 10, 100, 260, 120, *10 %A_ScriptDir%\bin\fullhp.png ; Left windows
-			If ErrorLevel = 0
-			{
-				MouseMove, 0 , 0
-				Loop, 3
-				{
-					Send {MButton} ;active windows 2
-				}
-				CoordMode, Pixel, Window
-				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-				if ErrorLevel = 1
-				{
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
-					If ErrorLevel = 0
-					{
-						Send 1
-					}
-					CoordMode, Mouse, Window
-					Loop, 50
-					{
-						Click, 100, 470
-						Sleep 10
-						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-						If ErrorLevel = 0
-						{
-							CoordMode, Mouse, Screen
-							CoordMode, Pixel, Screen
-							Break
-						}
-						else
-						{
-							detect++
-						}
-						if detect = 50
-						{
-							MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
-							ExitApp
-						}
-					}
-			
-				}
-				else
-				{
-					If Flow = True
-					{
-						CoordMode, Pixel, Window
-						PixelSearch, x, y, 409, 151, 411, 153, 0x242424,, Fast ;auto flow
-						If ErrorLevel = 0
-						{
-							Send e
-						}
-						CoordMode, Pixel, Screen
-					}
-					Send 2{Click, 100, 470}
-					duratimer := A_TickCount
-					MouseMove, 850 , 0
-					Loop, 3
-					{
-						Send {MButton} ;active windows 2
-					}
-					CoordMode, Mouse, Window
-					MouseMove, 100, 500
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
-					If ErrorLevel = 0
-					{
-						Send 1
-						if autorhythm = True
-						{
-							If rhyright = true
-							{
-								Send r
-							}
-						}
-					}
-					CoordMode, Pixel, Screen
-					Loop, ;fast phase
-					{
-						aa := A_TickCount - duratimer
-						if (aa > 26000)
-						{
-							Break
-						}
-						PixelSearch, x, y, 130, 105, 131, 106, 0x444444, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						PixelSearch, x, y, 130, 105, 131, 106, 0x3D3DA2, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						Click
-						Sleep 130
-					}
-					Loop, ; under half slow phase
-					{
-						aa := A_TickCount - duratimer
-						if (aa > 26000)
-						{
-							Break
-						}
-						PixelSearch, x, y, 70, 105, 71, 106, 0x444444, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						PixelSearch, x, y, 70, 105, 71, 106, 0x3D3DA2, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						Click
-						Sleep 330
-					}
-					Loop, ;30% phase
-					{
-						aa := A_TickCount - duratimer
-						if (aa > 26000)
-						{
-							Break
-						}
-						PixelSearch, x, y, 28, 105, 30, 106, 0x444444, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						PixelSearch, x, y, 28, 105, 30, 106, 0x3D3DA2, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						Click
-						Sleep 430
-					}
-					CoordMode, Mouse, Screen
-					MouseMove, 0 , 0
-					CoordMode, Mouse, Window
-					Loop, 3
-					{
-						Send {MButton} ;active windows 2
-					}
-					Click, 100, 470 ;active windows 1
-					CoordMode, Mouse, Screen
-					CoordMode, Pixel, Window
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-					if ErrorLevel = 1
-					{
-						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
-						If ErrorLevel = 0
-						{
-							Send 1
-						}
-						CoordMode, Mouse, Window
-						detect = 0
-						Loop, 50
-						{
-							Click, 100, 470
-							Sleep 10
-							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-							If ErrorLevel = 0
-							{
-								ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
-								If ErrorLevel = 0
-								{
-									CoordMode, Mouse, Screen
-									CoordMode, Pixel, Screen
-									Send 1
-									if autorhythm = True
-									{
-										if rhyleft = true
-										{
-											Send r
-										}
-									}
-								}
-								Break
-							}
-							else
-							{
-								detect++
-							}
-							if detect = 50
-							{
-								MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
-								ExitApp
-							}
-						}
-					}
-				
-				}
-			}
-			PixelSearch , x, y, 84, 133, 85, 134, 0x3A3A3A, 40, Fast
-			If ErrorLevel = 0
-			{
-				MouseMove, 0 , 0
-				Loop, 3
-				{
-					Send {MButton} ;active windows 2
-				}
-				CoordMode, Mouse, Window
-				MouseMove, 100, 500
-				Send {BackSpace}34567890 ;active windows 2
-				Sleep 200
-				time := A_TickCount
-				aw = 0
-				CoordMode, Pixel, Window
-				Loop, ; Eating part
-				{
-					Click, 100, 470, 10
-					Sleep 100
-					PixelSearch, x, y, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
-					If ErrorLevel = 1
-					{
-						Break
-					}
-					ImageSearch, x, y, 60, 515, 760, 600, *20 %A_ScriptDir%\bin\equipx.png ;if not found equiped slot /and still not full hunger
-					If ErrorLevel = 1
-					{
-						Sendinput, 34567890
-						aw++
-					}
-					if aw = 3
-					{
-						Break
-					}
-					
-				} Until A_TickCount - time > 60000
-				Send {BackSpace}
-				Sleep 100
-				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
-				If ErrorLevel = 0
-				{
-					CoordMode, Mouse, Screen
-					CoordMode, Pixel, Screen
-					Send 1
-					if autorhythm = True
-					{
-						if rhyleft = true
-						{
-							Send r
-						}
-					}
-				}
-			}
-			ImageSearch, x, y, 810, 100, 1060, 120, *10 %A_ScriptDir%\bin\fullhp.png ; Right windows
-			If ErrorLevel = 0
-			{
-				MouseMove, 850 , 0
-				Loop, 3
-				{
-					Send {MButton} ;active windows 2
-				}
-				CoordMode, Pixel, Window
-				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-				if ErrorLevel = 1
-				{
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
-					If ErrorLevel = 0
-					{
-						Send 1
-					}
-					CoordMode, Mouse, Window
-					detect = 0
-					Loop, 50
-					{
-						Click, 100, 470
-						Sleep 10
-						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-						If ErrorLevel = 0
-						{
-							CoordMode, Mouse, Screen
-							CoordMode, Pixel, Screen
-							Break
-						}
-						else
-						{
-							detect++
-						}
-						if detect = 50
-						{
-							MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
-							ExitApp
-						}
-					}
-				}
-				else
-				{
-					If Flow = True
-					{
-						CoordMode, Pixel, Window
-						PixelSearch, x, y, 409, 151, 411, 153, 0x242424,, Fast ;auto flow
-						If ErrorLevel = 0
-						{
-							Send e
-						}
-						CoordMode, Pixel, Screen
-					}
-					CoordMode, Mouse, Window
-					Send 2{Click, 100, 470}
-					CoordMode, Mouse, Screen
-					duratimer := A_TickCount
-					MouseMove, 0 , 0
-					Loop, 3
-					{
-						Send {MButton} ;active windows 1
-					}
-					CoordMode, Mouse, Window
-					MouseMove, 100, 500
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
-					If ErrorLevel = 0
-					{
-						Send 1
-						if autorhythm = True
-						{
-							if rhyleft = true
-							{
-								Send r
-							}
-						}
-					}
-					CoordMode, Pixel, Screen
-					Loop, ;fast phase
-					{
-						aa := A_TickCount - duratimer
-						if (aa > 26000)
-						{
-							Break
-						}
-						PixelSearch, x, y, 930, 105, 931, 106, 0x444444, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						PixelSearch, x, y, 930, 105, 931, 106, 0x3D3DA2, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						Click
-						Sleep 150
-					}
-					Loop, ; under half slow phase
-					{
-						aa := A_TickCount - duratimer
-						if (aa > 26000)
-						{
-							Break
-						}
-						PixelSearch, x, y, 870, 105, 871, 106, 0x444444, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						PixelSearch, x, y, 870, 105, 871, 106, 0x3D3DA2, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						Click
-						Sleep 300
-					}
-					Loop, ;30% phase
-					{
-						aa := A_TickCount - duratimer
-						if (aa > 26000)
-						{
-							Break
-						}
-						PixelSearch, x, y, 828, 105, 830, 106, 0x444444, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						PixelSearch, x, y, 828, 105, 830, 106, 0x3D3DA2, 20, Fast 
-						If ErrorLevel = 0
-						{
-							Break
-						}
-						Click
-						Sleep 450
-					}
-					CoordMode, Mouse, Screen
-					MouseMove, 880 , 0
-					CoordMode, Mouse, window
-					Loop, 3
-					{
-						Send {MButton} ;active windows 2
-					}
-					Click, 100, 470 ;active windows 1
-					CoordMode, Mouse, Screen
-					CoordMode, Pixel, Window
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-					if ErrorLevel = 1
-					{
-						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
-						If ErrorLevel = 0
-						{
-							Send 1
-						}
-						CoordMode, Mouse, Window
-						detect = 0
-						Loop, 50
-						{
-							Click, 100, 470
-							Sleep 10
-							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.bmp
-							If ErrorLevel = 0
-							{
-								ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
-								If ErrorLevel = 0
-								{
-									CoordMode, Mouse, Screen
-									CoordMode, Pixel, Screen
-									Send 1
-									if autorhythm = True
-									{
-										If rhyright = true
-										{
-											Send r
-										}
-									}
-								}
-								Break
-							}
-							else
-							{
-								detect++
-							}
-							if detect = 50
-							{
-								MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
-								ExitApp
-							}
-						}
-					}
-				
-				}
-			}
-			PixelSearch , x, y, 884, 133, 885, 134, 0x3A3A3A, 40, Fast
-			If ErrorLevel = 0
-			{
-				MouseMove, 850 , 0
-				Loop, 3
-				{
-					Send {MButton} ;active windows 2
-				}
-				CoordMode, Mouse, Window
-				Send {Click, 100, 470}{BackSpace}34567890 ;active windows 1
-				Sleep 200
-				time := A_TickCount
-				aw = 0
-				CoordMode, Pixel, Window
-				Loop, ; Eating part
-				{
-					Click, 100, 470, 10
-					Sleep 100
-					PixelSearch, x, y, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
-					If ErrorLevel = 1
-					{
-						Break
-					}
-					ImageSearch, x, y, 60, 515, 760, 600, *20 %A_ScriptDir%\bin\equipx.png ;if not found equiped slot /and still not full hunger
-					If ErrorLevel = 1
-					{
-						Sendinput, 34567890
-						aw++
-					}
-					if aw = 3
-					{
-						Break
-					}
-				} Until A_TickCount - time > 60000
-				Send {BackSpace}
-				Sleep 100
-				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
-				If ErrorLevel = 0
-				{
-					CoordMode, Mouse, Screen
-					CoordMode, Pixel, Screen
-					Send 1
-					if autorhythm = True
-					{
-						If rhyright = true
-						{
-							Send r
-						}
-					}
-				}
-			}
-		}
-	}
-}
-else
+colors := "0x444444, 0x3D3DA2"
+WinActivate ahk_pid %1%
+Sleep 100
+Send {BackSpace}
+Sleep 100
+Loop, 10
 {
-    ExitApp
+    Click, 100, 470
+}
+Send {BackSpace}1
+Sleep 100
+if autorhythm = true
+{
+    if rhyleft = true
+    {
+        Send r
+    }
+}
+
+WinActivate ahk_pid %2%
+Sleep 100
+Send {BackSpace}
+Sleep 100
+Loop, 10
+{
+    Click, 100, 470
+}
+Send {BackSpace}1
+Sleep 100
+if autorhythm = true
+{
+    if rhyright = true
+    {
+        Send r
+    }
+}
+Loop,
+{
+    CoordMode, Pixel, Screen
+    ImageSearch,,, 10, 100, 260, 120, *10 %A_ScriptDir%\bin\fullhp.png ; Left windows
+	If ErrorLevel = 0
+    {
+        WinActivate ahk_pid %1%
+        Sleep 100
+        Send {Backspace}2
+        Sleep 100
+        Click, 100, 470
+        duratimer := A_TickCount
+        Sleep 100
+        WinActivate ahk_pid %2%
+        Sleep 100
+        Send {BackSpace}1
+        Sleep 100
+        if autorhythm = true
+        {
+            if rhyright = true
+            {
+                Send r
+            }
+        }
+        MouseMove, 100, 470
+        Loop, ;fast phase
+		{
+		    aa := A_TickCount - duratimer
+		    if (aa > 26000)
+			{
+				Break
+			}
+		    PixelSearch,,, 130, 105, 131, 106, 0x444444, 20, Fast 
+			If ErrorLevel = 0
+			{
+                Break
+			}
+            PixelSearch,,, 130, 105, 131, 106, 0x3D3DA2, 20, Fast 
+			If ErrorLevel = 0
+			{
+                Break
+            }
+            Click
+			Sleep 100
+		}
+        Loop,
+        {
+            aa := A_TickCount - duratimer
+            if (aa > 26000)
+            {
+                Break
+            }
+            PixelSearch,,, 70, 105, 71, 106, 0x444444, 20, Fast 
+            If ErrorLevel = 0
+            {
+                Break
+            }
+            PixelSearch,,, 70, 105, 71, 106, 0x3D3DA2, 20, Fast 
+            If ErrorLevel = 0
+            {
+                Break
+            }
+            Click
+			Sleep 250
+            
+        }
+        Loop,
+        {
+            aa := A_TickCount - duratimer
+            if (aa > 26000)
+            {
+                Break
+            }
+            PixelSearch,,, 28, 105, 30, 106, 0x444444, 20, Fast 
+            If ErrorLevel = 0
+            {
+                Break
+            }
+            PixelSearch,,, 28, 105, 30, 106, 0x3D3DA2, 20, Fast 
+            If ErrorLevel = 0
+            {
+                Break
+            }      
+            Click
+			Sleep 400
+        }
+        WinActivate ahk_pid %1%
+        Sleep 100
+        Send {Backspace}2
+        Sleep 100
+        Click, 100, 470
+        Sleep 100
+        Send {Backspace}
+        Loop, 10
+        {
+            Click, 100, 470
+        }
+        if autorhythm = true
+        {
+            if rhyleft = true
+            {
+                Send r
+            }
+        }
+    }
+    if Oneside = false
+    {
+        ImageSearch,,, 810, 100, 1060, 120, *10 %A_ScriptDir%\bin\fullhp.png ; Right windows
+		If ErrorLevel = 0
+		{
+            WinActivate ahk_pid %2%
+            Sleep 100
+            Send {Backspace}2
+            Sleep 100
+            Click, 100, 470
+            duratimer := A_TickCount
+            WinActivate ahk_pid %1%
+            Sleep 100
+            Send {BackSpace}1
+            Sleep 100
+            if autorhythm = true
+            {
+                if rhyright = true
+                {
+                    Send r
+                }
+            }
+            MouseMove, 100, 470
+            Loop, ;fast phase
+            {
+                aa := A_TickCount - duratimer
+                if (aa > 26000)
+                {
+                    Break
+                }
+                PixelSearch,,, 930, 105, 931, 106, 0x444444, 20, Fast 
+                If ErrorLevel = 0
+                {
+                    Break
+                }
+                PixelSearch,,, 930, 105, 931, 106, 0x3D3DA2, 20, Fast 
+                If ErrorLevel = 0
+                {
+                    Break
+                }
+                Click
+                Sleep 100
+            }
+            Loop,
+            {
+                aa := A_TickCount - duratimer
+                if (aa > 26000)
+                {
+                    Break
+                }
+                PixelSearch,,, 870, 105, 871, 106, 0x444444, 20, Fast 
+                If ErrorLevel = 0
+                {
+                    Break
+                }
+                PixelSearch,,, 870, 105, 871, 106, 0x3D3DA2, 20, Fast 
+                If ErrorLevel = 0
+                {
+                    Break
+                }
+                Click
+                Sleep 250
+                
+            }
+            Loop,
+            {
+                aa := A_TickCount - duratimer
+                if (aa > 26000)
+                {
+                    Break
+                }
+                PixelSearch,,, 828, 105, 830, 106, 0x444444, 20, Fast 
+                If ErrorLevel = 0
+                {
+                    Break
+                }
+                PixelSearch,,, 828, 105, 830, 106, 0x3D3DA2, 20, Fast 
+                If ErrorLevel = 0
+                {
+                    Break
+                }      
+                Click
+                Sleep 400
+            }
+
+        
+            WinActivate ahk_pid %2%
+            Sleep 100
+            Send {Backspace}2
+            Sleep 100
+            Click, 100, 470
+            Loop, 10
+            {
+                Click, 100, 470
+            }
+            Send 1
+            Sleep 100
+            if autorhythm = true
+            {
+                if rhyright = true
+                {
+                    Send r
+                }
+            }
+        }
+    }
+    ;; eating 
+
+    PixelSearch , x, y, 884, 133, 885, 134, 0x3A3A3A, 40, Fast ; right screen is hungry
+    If ErrorLevel = 0
+    {
+        WinActivate ahk_pid %2%
+        Sleep 100
+        Send {Backspace}34567890
+        WinActivate ahk_pid %2%
+        Sleep 100
+        CoordMode, Pixel, Window
+        time := A_TickCount
+        Loop,
+        {
+            PixelSearch, x, y, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
+			If ErrorLevel = 1
+			{
+				Break
+			} else {
+                Click, 100, 470
+                Sleep 100
+                ImageSearch, x, y, 60, 515, 760, 600, *20 %A_ScriptDir%\bin\equipx.png ;if not found equiped slot /and still not full hunger
+                If ErrorLevel = 1
+                {
+                    Sendinput, 34567890
+                    aw++
+                }
+            }
+        } Until A_TickCount - time > 60000
+        CoordMode, Pixel, Screen
+        Send 1
+        Sleep 100
+        if autorhythm = true
+        Send r
+    }
+
+    PixelSearch , x, y, 84, 133, 85, 134, 0x3A3A3A, 40, Fast ; left screen is hungry
+    If ErrorLevel = 0
+    {
+        WinActivate ahk_pid %1%
+        Sleep 100
+        Send {Backspace}34567890
+        WinActivate ahk_pid %1%
+        Sleep 100
+        CoordMode, Pixel, Window
+        time := A_TickCount
+        Loop,
+        {
+            PixelSearch, x, y, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
+			If ErrorLevel = 1
+			{
+				Break
+			} else {
+                Click, 100, 470
+                Sleep 100
+                ImageSearch, x, y, 60, 515, 760, 600, *20 %A_ScriptDir%\bin\equipx.png ;if not found equiped slot /and still not full hunger
+                If ErrorLevel = 1
+                {
+                    Sendinput, 34567890
+                    aw++
+                }
+            }
+        } Until A_TickCount - time > 60000
+        CoordMode, Pixel, Screen
+        Send 1
+        Sleep 100
+        if autorhythm = true
+        Send r
+    }
 }
 Return
-
-
-\::ExitApp
+Space::ExitApp
