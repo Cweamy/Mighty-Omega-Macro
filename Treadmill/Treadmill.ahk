@@ -427,103 +427,134 @@ Loop,
                 Sleep 100
             }
         }
-    }
-    If Broken = true
-    {
-        Break
-    }
-    MouseMove, 405, 600
-    hand := A_TickCount
-    Loop,
-    {
-        hand2 := A_TickCount - hand
-        Sleep 50
-        ImageSearch,,, 390, 330, 430, 370, %A_WorkingDir%/bin/hand.bmp
-        If ErrorLevel = 0
+        If Broken = true
         {
             Break
         }
-        if (hand2 > 5000)
+        MouseMove, 405, 600
+        hand := A_TickCount
+        Loop,
         {
-            If Webhook = true
+            hand2 := A_TickCount - hand
+            Sleep 50
+            ImageSearch,,, 390, 330, 430, 370, %A_WorkingDir%/bin/hand.bmp
+            If ErrorLevel = 0
             {
-                Broken = true
-                amoney = true
-                Click, 410, 345
-                Sleep 500
                 Break
-            } else {
-                If autolog = true
+            }
+            if (hand2 > 5000)
+            {
+                If Webhook = true
                 {
-                    Process, Close, RobloxPlayerBeta.exe
+                    Broken = true
+                    amoney = true
+                    Click, 410, 345
+                    Sleep 500
+                    Break
+                } else {
+                    If autolog = true
+                    {
+                        Process, Close, RobloxPlayerBeta.exe
+                    }
+                    MsgBox, Money ranout
+                    ExitApp
                 }
-                MsgBox, Money ranout
-                ExitApp
             }
         }
-    }
-    If Broken = true
-    {
-        Break
-    }
-    Loop, 20 ;Click hand
-    {
-        Click , 410, 355
-        Click , 410, 351
-    }
-    Sleep 3000
-    Treadrun := A_TickCount
-    Loop,
-    {
-        run := A_TickCount - Treadrun
-        ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\w.bmp
-        if Errorlevel = 0
-        {				
-            Send {vk57} ;w
-        }			
-        ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\a.bmp
-        if Errorlevel = 0
-        {				
-            Send {vk41} ;a
-        }
-        ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\s.bmp
-        if Errorlevel = 0
-        {				
-            Send {vk53} ;s
-        }			
-        ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\d.bmp
-        if Errorlevel = 0
-        {				
-            Send {vk44} ;d
-        }
-        if (run > 57000)
+        If Broken = true
         {
-            Click, 400, 290
-            Click, 400, 291
+            Break
         }
-        PixelSearch ,,, 40, 130, 45, 133, 0x3A3A3A, 40, Fast
-        If ErrorLevel = 0
-        {				
-            WaitforStamina := A_TickCount
-            Loop,
+        Loop, 20 ;Click hand
+        {
+            Click , 410, 355
+            Click , 410, 351
+        }
+        Sleep 3000
+        Treadrun := A_TickCount
+        Loop,
+        {
+            run := A_TickCount - Treadrun
+            ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\w.bmp
+            if Errorlevel = 0
+            {				
+                Send {vk57} ;w
+            }			
+            ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\a.bmp
+            if Errorlevel = 0
+            {				
+                Send {vk41} ;a
+            }
+            ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\s.bmp
+            if Errorlevel = 0
+            {				
+                Send {vk53} ;s
+            }			
+            ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\d.bmp
+            if Errorlevel = 0
+            {				
+                Send {vk44} ;d
+            }
+            if (run > 57000)
             {
-                if (run > 57000)
+                Click, 400, 290
+                Click, 400, 291
+            }
+            PixelSearch ,,, 40, 130, 45, 133, 0x3A3A3A, 40, Fast
+            If ErrorLevel = 0
+            {				
+                WaitforStamina := A_TickCount
+                Loop,
                 {
-                    Click, 400, 290
-                    Click, 400, 291
+                    if (run > 57000)
+                    {
+                        Click, 400, 290
+                        Click, 400, 291
+                    }
+                } Until A_TickCount - WaitforStamina > 9000			
+            }
+        } Until A_TickCount - Treadrun > 65000
+        if autolog = true
+        {
+            Count++
+            if Count = %Log%
+            {
+                If Webhook = true
+                {
+                    Broken = true
+                    a65 = true
+                    Break
+                } else {
+                    Loop,
+                    {
+                        Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                        if ErrorLevel = 1
+                        {
+                            Sleep 100
+                            Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                            if ErrorLevel = 1
+                            {
+                                Break
+                            }
+                        } 
+                    }
+                    If autolog = true
+                    {
+                        Process, Close, RobloxPlayerBeta.exe
+                    }
+                    MsgBox, Fatigue Reached 65`%
+                    ExitApp
                 }
-            } Until A_TickCount - WaitforStamina > 9000			
+            }
         }
-    } Until A_TickCount - Treadrun > 65000
-    if autolog = true
-    {
-        Count++
-        if Count = %Log%
+        ; check for food
+        Pixelsearch,,, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
+        if ErrorLevel = 0
         {
             If Webhook = true
             {
                 Broken = true
-                a65 = true
+                aCombat = true
                 Break
             } else {
                 Loop,
@@ -543,172 +574,26 @@ Loop,
                 {
                     Process, Close, RobloxPlayerBeta.exe
                 }
-                MsgBox, Fatigue Reached 65`%
+                MsgBox, Combat tag 
                 ExitApp
             }
-        }
-    }
-    ; check for food
-    Pixelsearch,,, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
-    if ErrorLevel = 0
-    {
-        If Webhook = true
+        }   
+        PixelSearch ,,, 70, 144, 75, 146, 0x3A3A3A, 40, Fast ; Hungry
+        If ErrorLevel = 0
         {
-            Broken = true
-            aCombat = true
-            Break
-        } else {
-            Loop,
-            {
-                Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
-                if ErrorLevel = 1
-                {
-                    Sleep 100
-                    Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
-                    if ErrorLevel = 1
-                    {
-                        Break
-                    }
-                } 
-            }
-            If autolog = true
-            {
-                Process, Close, RobloxPlayerBeta.exe
-            }
-            MsgBox, Combat tag 
-            ExitApp
-        }
-    }   
-    PixelSearch ,,, 70, 144, 75, 146, 0x3A3A3A, 40, Fast ; Hungry
-    If ErrorLevel = 0
-    {
-        ; Auto eat
-        Click, 410, 345
-        Sleep 500
-        aw = 0
-        slot = 0
-        Loop, 11 ;slot
-        {
-            Send %slot%
-            Sleep 10
-            ImageSearch,,, 65, 525, 705, 545, *10 %A_WorkingDir%/bin/Slot/%slot%.bmp
-            If ErrorLevel = 0
-            {
-                Inventory = false
-                Break
-            } else {
-                slot++
-                if slot = 11
-                {
-                    Inventory = true
-                }
-            }
-        } 
-        If Inventory = true
-        {
-            Slotbar = 0
-            Send {VKC0}
-            MouseMove, 80, 50
-            Loop,
-            {
-                Acc1 := A_TickCount - acc
-                ImageSearch,,, 90, 190, 100, 200, *10 %A_WorkingDir%/bin/Slot/corner.bmp
-                If ErrorLevel = 0
-                {
-                    Break
-                }
-                If (Acc1 > 5000)
-                {
-                    Break
-                }
-            }
-            Loop,
-            {
-                ImageSearch, xx, yy, 65, 530, 750, 585, %A_WorkingDir%/bin/Slot/bar%Slotbar%.bmp
-                If ErrorLevel = 0
-                {
-                    food = 1
-                    Loop,
-                    {
-                        ImageSearch, x, y, 90, 195, 675, 500, %A_WorkingDir%/bin/food/foodall%food%.bmp
-                        If ErrorLevel = 0
-                        {
-                            calx:=x+20
-                            caly:=y+5
-                            calxx:=xx+20
-                            calyy:=yy+20 ;; somehow i can make it to work
-                            error = 0
-                            Click %calx% %caly% Down
-                            Sleep 30
-                            Click %calxx% %calyy% Up
-                            Sleep 10
-                            slotfound = true
-                            slotbar++
-                            Break
-                        } else {
-                            food++
-                            if food >= 23
-                            {
-                                food = 1
-                                error++
-                                if error >= 10
-                                {
-                                    If Webhook = true
-                                    {
-                                        Broken = true
-                                        anofood = true
-                                        Break
-                                    } else {
-                                        Loop,
-                                        {
-                                            Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
-                                            if ErrorLevel = 1
-                                            {
-                                                Sleep 100
-                                                Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
-                                                if ErrorLevel = 1
-                                                {
-                                                    Break
-                                                }
-                                            } 
-                                        }
-                                        If autolog = true
-                                        {
-                                            Process, Close, RobloxPlayerBeta.exe
-                                        }
-                                        MsgBox, No food Left
-                                        ExitApp
-                                    }
-                                }
-                            }
-                        }
-                        if slotfound = true
-                        {
-                            slotfound = false
-                            Break
-                        }
-                    }
-                } else {
-                    Slotbat++ 
-                    If Slotbar >= 10
-                    {
-                        Inventory = false
-                    }
-                }
-                If Inventory = false
-                {
-                        Break
-                }
-            }
-            Send {VKC0}
+            ; Auto eat
+            Click, 410, 345
+            Sleep 500
+            aw = 0
             slot = 0
-            Loop, 11
+            Loop, 11 ;slot
             {
                 Send %slot%
                 Sleep 10
                 ImageSearch,,, 65, 525, 705, 545, *10 %A_WorkingDir%/bin/Slot/%slot%.bmp
                 If ErrorLevel = 0
                 {
+                    Inventory = false
                     Break
                 } else {
                     slot++
@@ -718,32 +603,107 @@ Loop,
                     }
                 }
             } 
-        }
-
-        time := A_TickCount
-        Loop, ; Eating part
-        {
-            Click, 405 320
-            Sleep 100
-            Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast
-            if ErrorLevel = 0
+            If Inventory = true
             {
-                aCombat = true
-                Broken = true
-                Break
-            }
-            PixelSearch, x, y, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
-            If ErrorLevel = 1
-            {
-                Break
-            }
-            ImageSearch,,, 65, 525, 705, 545, *10 %A_WorkingDir%/bin/Slot/%slot%.bmp
-            If ErrorLevel = 1
-            {
+                Slotbar = 0
+                Send {VKC0}
+                MouseMove, 80, 50
+                Loop,
+                {
+                    Acc1 := A_TickCount - acc
+                    ImageSearch,,, 90, 190, 100, 200, *10 %A_WorkingDir%/bin/Slot/corner.bmp
+                    If ErrorLevel = 0
+                    {
+                        Break
+                    }
+                    If (Acc1 > 5000)
+                    {
+                        Break
+                    }
+                }
+                Loop,
+                {
+                    ImageSearch, xx, yy, 65, 530, 750, 585, %A_WorkingDir%/bin/Slot/bar%Slotbar%.bmp
+                    If ErrorLevel = 0
+                    {
+                        food = 1
+                        Loop,
+                        {
+                            ImageSearch, x, y, 90, 195, 675, 500, %A_WorkingDir%/bin/food/foodall%food%.bmp
+                            If ErrorLevel = 0
+                            {
+                                calx:=x+20
+                                caly:=y+5
+                                calxx:=xx+20
+                                calyy:=yy+20 ;; somehow i can make it to work
+                                error = 0
+                                Click %calx% %caly% Down
+                                Sleep 30
+                                Click %calxx% %calyy% Up
+                                Sleep 10
+                                slotfound = true
+                                slotbar++
+                                Break
+                            } else {
+                                food++
+                                if food >= 23
+                                {
+                                    food = 1
+                                    error++
+                                    if error >= 10
+                                    {
+                                        If Webhook = true
+                                        {
+                                            Broken = true
+                                            anofood = true
+                                            Break
+                                        } else {
+                                            Loop,
+                                            {
+                                                Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                                                if ErrorLevel = 1
+                                                {
+                                                    Sleep 100
+                                                    Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                                                    if ErrorLevel = 1
+                                                    {
+                                                        Break
+                                                    }
+                                                } 
+                                            }
+                                            If autolog = true
+                                            {
+                                                Process, Close, RobloxPlayerBeta.exe
+                                            }
+                                            MsgBox, No food Left
+                                            ExitApp
+                                        }
+                                    }
+                                }
+                            }
+                            if slotfound = true
+                            {
+                                slotfound = false
+                                Break
+                            }
+                        }
+                    } else {
+                        Slotbat++ 
+                        If Slotbar >= 10
+                        {
+                            Inventory = false
+                        }
+                    }
+                    If Inventory = false
+                    {
+                            Break
+                    }
+                }
+                Send {VKC0}
                 slot = 0
                 Loop, 11
                 {
-                    Send %slot% 
+                    Send %slot%
                     Sleep 10
                     ImageSearch,,, 65, 525, 705, 545, *10 %A_WorkingDir%/bin/Slot/%slot%.bmp
                     If ErrorLevel = 0
@@ -754,21 +714,62 @@ Loop,
                         if slot = 11
                         {
                             Inventory = true
-                            Break
                         }
                     }
                 } 
             }
-        } Until A_TickCount - time > 60000
-        Send {BackSpace}
-        StartTime2 := A_TickCount
-        Loop,
-        {			
-        Click , 409, 296
-        Click , 409, 295
-        } Until A_TickCount - StartTime2 > 1500
+
+            time := A_TickCount
+            Loop, ; Eating part
+            {
+                Click, 405 320
+                Sleep 100
+                Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast
+                if ErrorLevel = 0
+                {
+                    aCombat = true
+                    Broken = true
+                    Break
+                }
+                PixelSearch, x, y, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
+                If ErrorLevel = 1
+                {
+                    Break
+                }
+                ImageSearch,,, 65, 525, 705, 545, *10 %A_WorkingDir%/bin/Slot/%slot%.bmp
+                If ErrorLevel = 1
+                {
+                    slot = 0
+                    Loop, 11
+                    {
+                        Send %slot% 
+                        Sleep 10
+                        ImageSearch,,, 65, 525, 705, 545, *10 %A_WorkingDir%/bin/Slot/%slot%.bmp
+                        If ErrorLevel = 0
+                        {
+                            Break
+                        } else {
+                            slot++
+                            if slot = 11
+                            {
+                                Inventory = true
+                                Break
+                            }
+                        }
+                    } 
+                }
+            } Until A_TickCount - time > 60000
+            Send {BackSpace}
+            StartTime2 := A_TickCount
+            Loop,
+            {			
+            Click , 409, 296
+            Click , 409, 295
+            } Until A_TickCount - StartTime2 > 1500
+        }
     }
-}
+    }
+    
 ImageSearch,,, 330, 230, 485, 270, *10 %A_WorkingDir%/bin/Leave.bmp
 If ErrorLevel = 0
 {
