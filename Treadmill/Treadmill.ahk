@@ -154,11 +154,13 @@ Return
 GuiEscape:
 ButtonFinished:
     Gui, Submit, 
+    TrainingChoice:=TrainingChoice
+    TrainingChoice1:=TrainingChoice1
     if (log = "")
     {
         log:=Reptimes
     } else {
-        if (Reptimes = "")
+        if (Reptimes = )
         {
             MsgBox,,, Vivace's Macro, you have uncompleted info.
             ExitApp
@@ -166,19 +168,13 @@ ButtonFinished:
     }
     if (TrainingChoice = "" )
     {
-        MsgBox,,, Are you sure you want to exit, you have uncompleted info.
-        {
-            MsgBox,,, Vivace's Macro, you have uncompleted info.
-            ExitApp
-        }
+        MsgBox,,, Vivace's Macro, you have uncompleted info.
+        ExitApp
     }
-    if (vTrainingChoice1 = "" )
+    if (TrainingChoice1 = "" )
     {
-        MsgBox,,, Are you sure you want to exit, you have uncompleted info.
-        {
-            MsgBox,,, Vivace's Macro, you have uncompleted info.
-            ExitApp
-        }
+        MsgBox,,, Vivace's Macro, you have uncompleted info.
+        ExitApp
     }
     goto, StartTreadmill
 Return
