@@ -247,7 +247,7 @@ if (toggle)
 			rhythm = false
 			If Running = False
 			{
-				Sendinput, {s down}{w down}{w up}{w down}
+				Sendinput, w{w down}{up}
 				Sleep 4000
 				Running = True
 			}
@@ -255,14 +255,14 @@ if (toggle)
 			If ErrorLevel = 1 ; If Found
 			{
 				Running = False
-				Sendinput, {w up}{s up}
+				Sendinput, {w up}
 			}
 		} 
 		else 
 		{ ; if True
 			if Running = True
 			{
-				Sendinput, {w up}{s up}
+				Sendinput, {w up}
 				Running = False			
 			}
 			if autorhythm = True ; Auto Rythm
