@@ -165,7 +165,7 @@ if (macro_on)
 					Click
 		    		MouseMove, x-1, y, 0
                     Click, 5
-                    Sleep 400
+                    Sleep 1200
 					Loop, 20
 					{
 						Click , 410, 355
