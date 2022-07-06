@@ -442,6 +442,7 @@ Check1:
             )
             WebRequest.Send(eatprotein4)
         }
+        eatprotein = false
     }
     Click, 400, 455
     Sleep 200
