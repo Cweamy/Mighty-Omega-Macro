@@ -589,7 +589,7 @@ Startweight:
                     Sleep 1000
                 }
                 nah++
-                if nah = 2
+                if nah = 3
                 {
                     nah = 0 ;simple check
                 }
