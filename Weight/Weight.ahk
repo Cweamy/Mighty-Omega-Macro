@@ -454,6 +454,7 @@ Check1:
 Return
 ChooseLevel:
 {
+    Sleep 100
     if TrainingChoice1 = AutoChoose
     {
         levely = 400
@@ -467,6 +468,7 @@ ChooseLevel:
                 MouseMove, 470 , %levely%
                 MouseMove, 471 , %levely%
                 Click, 10
+                Sleep 100
                 tooltip, choosed %levell%
                 Break
             } else {
@@ -524,7 +526,7 @@ ChooseLevel:
         MouseMove, 471 , 250
         Click, 10 
     }
-    Sleep 50
+    Sleep 100
     MouseMove, 405, 600
 }
 Return
@@ -543,7 +545,7 @@ Hand:
             }
             Return
         } 
-    } Until A_TickCount - hand22 > 3000
+    } Until A_TickCount - hand22 > 5000
     Broken = True
     amoney = true
     goto, Check
