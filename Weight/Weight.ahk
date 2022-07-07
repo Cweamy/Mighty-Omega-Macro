@@ -449,7 +449,12 @@ Check1:
     Send 1{Click, 40, 480}
     Sleep 8000
     Send {BackSpace}
-    Click, 400, 390
+    StartTime3 := A_TickCount
+    Loop,
+    {
+        Click, 400, 390
+        Click, 400, 391
+    } Until A_TickCount - StartTime3 > 3000
 }
 Return
 ChooseLevel:
@@ -589,7 +594,6 @@ Startweight:
                 if nah = 0
                 {
                     gosub, Check1
-                    Sleep 1000
                 }
                 nah++
                 if nah = 3
