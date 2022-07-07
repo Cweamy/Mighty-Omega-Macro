@@ -530,6 +530,7 @@ Return
 
 ChooseLevel:
 {
+    Sleep 200
     if TrainingChoice1 = AutoChoose
     {
         levely = 370
